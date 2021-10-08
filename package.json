@@ -1,0 +1,36 @@
+{
+  "name": "hamorny_tip_bot",
+  "version": "1.0.0",
+  "description": "harmony one reddit tip bot",
+  "main": "index.js",
+  "pkg": {
+    "assets": [
+      "views/**/*",
+      "img/**/*"
+    ]
+  },
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ONE"
+  ],
+  "author": "tnm0113",
+  "license": "ISC",
+  "dependencies": {
+    "@harmony-js/crypto": "^0.1.56",
+    "config": "^3.3.6",
+    "ethers": "^5.4.7",
+    "sequelize": "^6.6.2",
+    "snoostorm": "^1.5.2",
+    "snoowrap": "^1.23.0",
+    "sqlite3": "^5.0.2",
+    "winston": "^3.3.3",
+    "winston-daily-rotate-file": "^4.5.5"
+  },
+  "type": "module",
+  "devDependencies": {
+    "tslib": "^2.2.0"
+  }
+}
