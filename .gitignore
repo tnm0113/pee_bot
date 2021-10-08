@@ -1,0 +1,6 @@
+node_modules/
+credentials.js
+*.sqlite
+build/
+log/
+config/default.json
