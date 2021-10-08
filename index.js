@@ -612,6 +612,8 @@ async function processComment(item){
                     item.reply("You need to wait 5 minutes between each golden command");
                     return;
                 }
+            } else {
+                allowProcess = true;
             }
             if (allowProcess){
                 const pee_token = tokens.tokens.find((t) => t.name === "PEE");

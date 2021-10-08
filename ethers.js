@@ -45,7 +45,7 @@ async function addAllAccounts(){
     const wallet = walletMnemonic.connect(provider);
     mapWallets.set(user.ethAddress, wallet);
     mapAccountNonce.set(user.ethAddress, 0);
-    await approveFirstTime(pee_token, user.ethAddress);
+    // await approveFirstTime(pee_token, user.ethAddress);
   })
   if (botWalletSeed){
     logger.debug("add bot wallet");
