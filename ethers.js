@@ -12,7 +12,9 @@ import { hexValue } from "@ethersproject/bytes";
 import { erc20 } from "./erc20_abi.js";
 
 const botConfig = config.get("bot");
-const botWalletSeed = botConfig.wallet_seed;
+// const botWalletSeed = botConfig.wallet_seed;
+const botwalletAddress = "";
+const defaultGasForNewUser = botConfig.gas_for_new || 0.00025 * 10;
 
 const blockChainUrl = botConfig.mainnet ? "https://api.s0.t.hmny.io/" : "https://api.s0.b.hmny.io/";
 const provider = new ethers.providers.JsonRpcProvider(blockChainUrl);
@@ -45,14 +47,17 @@ async function addAllAccounts(){
     const wallet = walletMnemonic.connect(provider);
     mapWallets.set(user.ethAddress, wallet);
     mapAccountNonce.set(user.ethAddress, 0);
+    if (user.username.toLowerCase() === botConfig.name.toLowerCase()){
+      botwalletAddress = user.ethAddress;
+    }
     // await approveFirstTime(pee_token, user.ethAddress);
   })
-  if (botWalletSeed){
-    logger.debug("add bot wallet");
-    const walletMnemonic = ethers.Wallet.fromMnemonic(botWalletSeed, harmonyWalletPath);
-    const wallet = walletMnemonic.connect(provider);
-    mapWallets.set(botConfig.wallet_address, wallet);
-  }
+  // if (botWalletSeed){
+  //   logger.debug("add bot wallet");
+  //   const walletMnemonic = ethers.Wallet.fromMnemonic(botWalletSeed, harmonyWalletPath);
+  //   const wallet = walletMnemonic.connect(provider);
+  //   mapWallets.set(botConfig.wallet_address, wallet);
+  // }
 }
 
 async function addNewAccount(mnemonic){
@@ -99,6 +104,15 @@ async function getTokenBalance(contractAddress, userAddress){
     return rs;
   } catch (error) {
     console.log("error ", error);
+  }
+}
+
+async function sendGasForNewUser(userAddress){
+  try {
+    const hash = await transferOne(botwalletAddress, userAddress, defaultGasForNewUser);
+    return hash;
+  } catch (error){
+    logger.error('send gas for new user error ' + error);
   }
 }
 
@@ -258,4 +272,15 @@ async function approveMultiSend(ownerAddress, token){
   }
 }
 
-export { transferOne, getAccountBalance, createAccount, addAllAccounts, transferToken, getTokenBalance, addNewAccount, multiSend, approveFirstTime };
+export { 
+  transferOne, 
+  getAccountBalance, 
+  createAccount, 
+  addAllAccounts, 
+  transferToken, 
+  getTokenBalance, 
+  addNewAccount, 
+  multiSend, 
+  approveFirstTime,
+  sendGasForNewUser 
+};

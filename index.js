@@ -16,7 +16,8 @@ import {
     getTokenBalance,
     addNewAccount,
     multiSend,
-    approveFirstTime
+    approveFirstTime,
+    sendGasForNewUser
 } from "./ethers.js";
 import * as TEXT from "./text_pee.js";
 
@@ -144,7 +145,7 @@ async function findOrCreate(username) {
             const blockchainInfo = createAccount();
             addNewAccount(blockchainInfo.mnemonic);
             logger.debug("blockchainInfo " + JSON.stringify(blockchainInfo));
-            const hash = await transferOne(botWalletAddress, blockchainInfo.oneAddress, defaultGasForNewUser);
+            const hash = await sendGasForNewUser(blockchainInfo.ethAddress);
             logger.debug("send gas to new user hash " + hash);
             if (hash){
                 const token = getTokenWithName("pee")[0];
@@ -650,7 +651,7 @@ async function processComment(item){
                                 getRecursiveComment(allUsers, comment);
                             })
                             for (const u of allUsers){
-                                if (u !== item.author.name && u != botConfig.name){
+                                if (u !== item.author.name && u !== botConfig.name && u !== "AutoModerator"){
                                     const receiver = await findOrCreate(u.toLowerCase());
                                     if (addressReceivers.length <= amountTip){
                                         logger.debug("send to " + receiver.ethAddress);
@@ -664,7 +665,7 @@ async function processComment(item){
                         logger.debug('sprinker all the way up');
                         allParents.pop();
                         for (const p of allParents){
-                            if (p.author.name !== item.author.name && p.author.name != botConfig.name){
+                            if (p.author.name !== item.author.name && p.author.name != botConfig.name && u !== "AutoModerator"){
                                 const receiver = await findOrCreate(p.author.name.toLowerCase());
                                 if (addressReceivers.length <= amountTip){
                                     logger.debug("send to " + receiver.ethAddress);
