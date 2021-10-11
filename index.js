@@ -651,7 +651,7 @@ async function processComment(item){
                                 getRecursiveComment(allUsers, comment);
                             })
                             for (const u of allUsers){
-                                if (u !== item.author.name && u !== botConfig.name && u !== "AutoModerator"){
+                                if (u !== item.author.name && u !== botConfig.name && u !== "AutoModerator" && u !== "deleted"){
                                     const receiver = await findOrCreate(u.toLowerCase());
                                     if (addressReceivers.length <= amountTip){
                                         logger.debug("send to " + receiver.ethAddress);
@@ -665,7 +665,7 @@ async function processComment(item){
                         logger.debug('sprinker all the way up');
                         allParents.pop();
                         for (const p of allParents){
-                            if (p.author.name !== item.author.name && p.author.name != botConfig.name && u !== "AutoModerator"){
+                            if (p.author.name !== item.author.name && p.author.name != botConfig.name && u !== "AutoModerator" && u !== "deleted"){
                                 const receiver = await findOrCreate(p.author.name.toLowerCase());
                                 if (addressReceivers.length <= amountTip){
                                     logger.debug("send to " + receiver.ethAddress);
@@ -722,7 +722,7 @@ async function processComment(item){
         } else if (sliceCms.includes(COMMANDS.LVL) && sliceCms.length === 2){
             if (mods.includes(item.author.name)){
                 logger.info('receive level command from mod ' + item.author.name);
-                const updateUserName = await client.getComment(item.parent_id).author.name;
+                const updateUserName = await client.getComment(item.parent_id).author.name.toLowerCase();
                 const updateUser = await findUser(updateUserName);
                 if (!updateUser){
                     const text = `User ${updateUserName} didnt have account`;

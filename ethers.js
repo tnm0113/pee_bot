@@ -60,10 +60,10 @@ async function addAllAccounts(){
   // }
 }
 
-async function addNewAccount(mnemonic){
+function addNewAccount(mnemonic){
   const walletMnemonic = ethers.Wallet.fromMnemonic(mnemonic, harmonyWalletPath);
   const wallet = walletMnemonic.connect(provider);
-  const addr = await wallet.getAddress();
+  const addr = wallet.address;
   mapWallets.set(addr, wallet);
 }
 
