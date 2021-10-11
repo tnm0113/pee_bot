@@ -13,7 +13,7 @@ import { erc20 } from "./erc20_abi.js";
 
 const botConfig = config.get("bot");
 // const botWalletSeed = botConfig.wallet_seed;
-const botwalletAddress = "";
+let botwalletAddress = "";
 const defaultGasForNewUser = botConfig.gas_for_new || 0.00025 * 10;
 
 const blockChainUrl = botConfig.mainnet ? "https://api.s0.t.hmny.io/" : "https://api.s0.b.hmny.io/";
@@ -49,6 +49,7 @@ async function addAllAccounts(){
     mapAccountNonce.set(user.ethAddress, 0);
     if (user.username.toLowerCase() === botConfig.name.toLowerCase()){
       botwalletAddress = user.ethAddress;
+      logger.debug('bot address ' + botwalletAddress);
     }
     // await approveFirstTime(pee_token, user.ethAddress);
   })
