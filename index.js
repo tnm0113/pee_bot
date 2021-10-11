@@ -852,7 +852,8 @@ async function processFuelRequest(item){
         if (Number(balanceOne) < defaultGasForNewUser){
             const hash = await sendGasForNewUser(user.ethAddress);
             logger.debug("send gas to new user hash on fuel request " + hash);
-            const text = TEXT.FUEL_SUCCESS(hash);
+            const txLink = explorerLink + hash;
+            const text = TEXT.FUEL_SUCCESS(txLink);
             const subject = "Fuel result";
             await sendMessage(item.author.name, subject, text);
         } else {
