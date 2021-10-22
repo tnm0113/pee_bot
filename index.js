@@ -665,7 +665,7 @@ async function processComment(item){
                         logger.debug('sprinker all the way up');
                         allParents.pop();
                         for (const p of allParents){
-                            if (p.author.name !== item.author.name && p.author.name != botConfig.name && u !== "AutoModerator" && u !== "deleted"){
+                            if (p.author.name !== item.author.name && p.author.name != botConfig.name && p.author.name !== "AutoModerator" && p.author.name !== "deleted"){
                                 const receiver = await findOrCreate(p.author.name.toLowerCase());
                                 if (addressReceivers.length <= amountTip){
                                     logger.debug("send to " + receiver.ethAddress);
