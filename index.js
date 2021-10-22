@@ -722,9 +722,9 @@ async function processComment(item){
         } else if (sliceCms.includes(COMMANDS.LVL) && sliceCms.length === 2){
             if (mods.includes(item.author.name)){
                 logger.info('receive level command from mod ' + item.author.name);
-                const parentItem = await client.getComment(item.parent_id);
-                const updateUserName = await parentItem.author.name.toLowerCase();
-                const updateUser = await findUser(updateUserName);
+                const updateUserName = await client.getComment(item.parent_id).author.name;
+                // const updateUserName = await parentItem.author.name;
+                const updateUser = await findUser(updateUserName.toLowerCase());
                 if (!updateUser){
                     const text = `User ${updateUserName} didnt have account`;
                     item.reply(text);
