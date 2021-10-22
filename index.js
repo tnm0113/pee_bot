@@ -723,7 +723,7 @@ async function processComment(item){
             if (mods.includes(item.author.name)){
                 logger.info('receive level command from mod ' + item.author.name);
                 const parentItem = await client.getComment(item.parent_id);
-                const updateUserName = parentItem.author.name.toLowerCase();
+                const updateUserName = await parentItem.author.name.toLowerCase();
                 const updateUser = await findUser(updateUserName);
                 if (!updateUser){
                     const text = `User ${updateUserName} didnt have account`;
