@@ -634,7 +634,9 @@ async function processComment(item){
                         item.reply(TEXT.BAN_TEXT);
                         return;
                     }
+                    console.log('user ' + username + ' is at level ' + userLevel);
                     const amountTip = MAP_USER_LEVEL.get(userLevel);
+                    logger.debug('amount can tip ' + amountTip);
                     let allParents = [];
                     await getRecursiveParents(allParents, item);
                     const addressReceivers = [];
