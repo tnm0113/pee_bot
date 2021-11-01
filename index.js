@@ -733,7 +733,7 @@ async function processComment(item){
                     return;
                 }
                 if (sliceCms[1] === "ban"){
-                    const result = await updateUserLevel(updateUserName, -1);
+                    const result = await updateUserLevel(updateUserName.toLowerCase(), -1);
                     if (result){
                         logger.debug('ban user ' + updateUserName);
                         item.reply(TEXT.BANNED_USER_SUCCESS(updateUserName));
@@ -755,7 +755,7 @@ async function processComment(item){
                     return;
                 }
 
-                const result = await updateUserLevel(updateUserName, level);
+                const result = await updateUserLevel(updateUserName.toLowerCase(), level);
                 if (result){
                     logger.debug('update user ' + updateUserName + ' to level ' + level);
                     item.reply(TEXT.LEVEL_UP_SUCCESS(level, updateUserName));
