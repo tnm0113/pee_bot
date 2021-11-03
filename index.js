@@ -526,7 +526,8 @@ async function processComment(item){
         if (splitCms.length < 2){
             return;
         }
-        const sliceCms = splitCms.slice(splitCms.length - 2);
+        const index = splitCms.findIndex((e) => tokenCommands.includes(e));
+        const sliceCms = splitCms.slice(index);
         if (tokenCommands.includes(sliceCms[0])){
             if (sliceCms.length >= 2){
                 logger.debug("sliceCms " + sliceCms);
@@ -564,8 +565,8 @@ async function processComment(item){
                     // toUserName = await parentComment.author.name;
                     toUserName = toUserName.toLowerCase();
                     if (sliceCms.length > 2){
-                        if (sliceCms[3].match(regexUser)){
-                            toUserName = sliceCms[3].replace("/u/","").replace("u/","");
+                        if (sliceCms[2].match(regexUser)){
+                            toUserName = sliceCms[2].replace("/u/","").replace("u/","");
                         }
                     }
                     logger.debug("start tip");
