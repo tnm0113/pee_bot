@@ -564,8 +564,8 @@ async function processComment(item){
                     // toUserName = await parentComment.author.name;
                     toUserName = toUserName.toLowerCase();
                     if (sliceCms.length > 2){
-                        if (sliceCms[2].match(regexUser)){
-                            toUserName = sliceCms[2].replace("/u/","").replace("u/","");
+                        if (sliceCms[3].match(regexUser)){
+                            toUserName = sliceCms[3].replace("/u/","").replace("u/","");
                         }
                     }
                     logger.debug("start tip");
