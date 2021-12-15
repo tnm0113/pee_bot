@@ -603,7 +603,7 @@ async function processComment(item){
             } else {
                 logger.debug("comment item already process");
             }
-        } if ((sliceCms.includes(COMMANDS.GS) || sliceCms.includes(COMMANDS.GSP)) && sliceCms.length === 2){
+        } else if ((splitCms.includes(COMMANDS.GS) || splitCms.includes(COMMANDS.GSP)) && splitCms.length === 2){
             let allowProcess = false;
             const lastGsLog = await getLastTimeSprinker(item.author.name.toLowerCase());
             if (lastGsLog){
@@ -619,7 +619,7 @@ async function processComment(item){
             }
             if (allowProcess){
                 const pee_token = tokens.tokens.find((t) => t.name === "PEE");
-                const amount = Number(sliceCms[1]);
+                const amount = Number(splitCms[1]);
                 if (isNaN(amount)){
                     console.log('invalid command');
                     item.reply(TEXT.INVALID_COMMAND);
@@ -682,7 +682,7 @@ async function processComment(item){
                         }
                     }
                     
-                    if (sliceCms[0] === COMMANDS.GSP){
+                    if (splitCms[0] === COMMANDS.GSP){
                         sendAmount = sendAmount/addressReceivers.length;
                     }
     
@@ -704,7 +704,7 @@ async function processComment(item){
                             sendAmount * addressReceivers.length,
                             item.id,
                             "PEE",
-                            sliceCms[0],
+                            splitCms[0],
                             1
                         );
                     } else {
@@ -716,13 +716,13 @@ async function processComment(item){
                             sendAmount * addressReceivers.length,
                             item.id,
                             "PEE",
-                            sliceCms[0],
+                            splitCms[0],
                             0
                         );
                     }
                 }
             }
-        } else if (sliceCms.includes(COMMANDS.LVL) && sliceCms.length === 2){
+        } else if (splitCms.includes(COMMANDS.LVL) && splitCms.length === 2){
             if (mods.includes(item.author.name)){
                 logger.info('receive level command from mod ' + item.author.name);
                 const updateUserName = await client.getComment(item.parent_id).author.name;
@@ -733,7 +733,7 @@ async function processComment(item){
                     item.reply(text);
                     return;
                 }
-                if (sliceCms[1] === "ban"){
+                if (splitCms[1] === "ban"){
                     const result = await updateUserLevel(updateUserName.toLowerCase(), -1);
                     if (result){
                         logger.debug('ban user ' + updateUserName);
@@ -744,7 +744,7 @@ async function processComment(item){
                         logger.error('ban user failed');
                     }
                 }
-                const level = Number(sliceCms[1]);
+                const level = Number(splitCms[1]);
                 if (isNaN(level)){
                     logger.debug('invalid level command');
                     item.reply(TEXT.INVALID_COMMAND);
@@ -774,7 +774,7 @@ async function processComment(item){
                 0,
                 item.id,
                 '',
-                sliceCms[0],
+                splitCms[0],
                 1
             );
         }
