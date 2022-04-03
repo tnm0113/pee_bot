@@ -128,7 +128,7 @@ async function transferOne(senderAddress, receiverAddress, amount) {
     logger.info("start tranfer to " + receiverAddress + " from address " + senderAddress + " amount " + amount + " ONE");
     const wallet = mapWallets.get(senderAddress);
     const gasPrice = await provider.getGasPrice();
-    const gasLimit = ethers.utils.hexlify(hexValue(21000));
+    const gasLimit = ethers.utils.hexlify(hexValue(31000));
     let nonce = 0;
     if (mapAccountNonce.get(senderAddress) === 0){
       nonce = await provider.getTransactionCount(senderAddress, 'latest');
