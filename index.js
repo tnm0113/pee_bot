@@ -916,7 +916,7 @@ try {
         }
     });
 
-    const commentOnOswap = new CommentStream(client, {
+    const commentOnOswap = new CommentStream(crawbot, {
         subreddit: 'OpenSwap_Harmony',
         limit: 30,
         pollTime: comment_poll_time,
@@ -940,29 +940,29 @@ try {
         }
     });
 
-    const commentOnOpacity = new CommentStream(client, {
-        subreddit: 'Opacity',
-        limit: 30,
-        pollTime: comment_poll_time,
-    })
+    // const commentOnOpacity = new CommentStream(client, {
+    //     subreddit: 'Opacity',
+    //     limit: 30,
+    //     pollTime: comment_poll_time,
+    // })
 
-    commentOnOpacity.on("item", async function(item){
-        try {
-            if (item.author.name === botConfig.name){
-                return;
-            }
-            let allowProcess = false;
-            if (Date.now()/1000 - item.created_utc < itemExpireTime){
-                logger.debug("need to check log in db comment");
-                const log = await checkExistedInLog(item.id);
-                allowProcess = log ? false : true;
-            }
-            if (allowProcess)
-                processComment(item);
-        } catch (error) {
-            logger.error("process comment error " + JSON.stringify(error));
-        }
-    });
+    // commentOnOpacity.on("item", async function(item){
+    //     try {
+    //         if (item.author.name === botConfig.name){
+    //             return;
+    //         }
+    //         let allowProcess = false;
+    //         if (Date.now()/1000 - item.created_utc < itemExpireTime){
+    //             logger.debug("need to check log in db comment");
+    //             const log = await checkExistedInLog(item.id);
+    //             allowProcess = log ? false : true;
+    //         }
+    //         if (allowProcess)
+    //             processComment(item);
+    //     } catch (error) {
+    //         logger.error("process comment error " + JSON.stringify(error));
+    //     }
+    // });
     
     inbox.on("item", async function (item) {
         try {
